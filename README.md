@@ -8,12 +8,19 @@ incident brief, and answer a realistic diagnostic challenge (pick the right
 
 Crash the pod? No. Rescue the cluster. ✅
 
+## 🎮 Live demo
+
+Play it now at **[kube-rescue.onrender.com](https://kube-rescue.onrender.com)** —
+no install needed. Works on desktop (keyboard) and mobile (touch joystick).
+
 ## Gameplay
 
 - **Explore** — drive your astronaut around a hexagonal cluster floor with
-  WASD / arrow keys. The camera follows from above.
+  WASD / arrow keys, or an on-screen touch joystick on mobile. The camera
+  follows from above.
 - **Beacons** — each glowing beacon is a mission. Locked beacons are dimmed;
-  available beacons pulse and show `PRESS SPACE` when you're close.
+  available beacons pulse and show `PRESS SPACE` when you're close (on mobile,
+  an Interact button appears instead).
 - **Incidents** — opening a beacon gives you a narrative brief and a technical
   scenario, then a challenge: choose the correct command or fix.
 - **Progression** — missions form a prerequisite chain (you can't fix the
