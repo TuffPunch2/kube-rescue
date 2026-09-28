@@ -5,6 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Text, Billboard } from "@react-three/drei";
 import * as THREE from "three";
 import { useKeyboardControls, type MovementKeys } from "./useKeyboardControls";
+import { joystickInput } from "./joystickInput";
 
 interface AstronautProps {
   // Refs that the parent reads to detect proximity to beacons.
@@ -86,6 +87,16 @@ export default function Astronaut({
     if (k.back) inputZ -= 1;
     if (k.right) inputX += 1;
     if (k.left) inputX -= 1;
+
+    // Analog joystick (mobile): y < 0 is "up" = forward. Combined with keys
+    // then clamped so diagonal keyboard + joystick input can't exceed 1.
+    inputX += joystickInput.x;
+    inputZ += joystickInput.y;
+    const inputMag = Math.hypot(inputX, inputZ);
+    if (inputMag > 1) {
+      inputX /= inputMag;
+      inputZ /= inputMag;
+    }
 
     // Project input through camera yaw so up = away from camera
     // Compute camera yaw (rotation around Y)

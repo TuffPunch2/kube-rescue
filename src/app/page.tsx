@@ -6,6 +6,7 @@ import { useGameStore } from "@/lib/gameStore";
 import StartScreen from "@/components/game/StartScreen";
 import MissionDialog from "@/components/game/MissionDialog";
 import Hud from "@/components/game/Hud";
+import MobileControls from "@/components/game/MobileControls";
 
 // The 3D scene relies on WebGL and @react-three/fiber, both of which only
 // run in the browser. We load it with ssr: false so the server never tries
@@ -68,6 +69,9 @@ export default function Home() {
 
       {/* HUD overlay */}
       <Hud />
+
+      {/* Touch controls (joystick + interact) — hidden on desktop pointers */}
+      <MobileControls />
 
       {/* Mission dialogue (space-to-open) */}
       <MissionDialog />

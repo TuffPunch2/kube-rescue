@@ -32,6 +32,7 @@ interface GameStore {
   setNearbyMission: (id: string | null) => void;
   openChallenge: () => void;
   closeChallenge: () => void;
+  tryOpenNearbyMission: () => void;
   answerChallenge: (selectedIndex: number) => boolean;
   closeDialog: () => void;
   hydrate: () => void;
@@ -128,6 +129,16 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   openChallenge: () => set({ challengeOpen: true, challengeResult: "idle" }),
   closeChallenge: () => set({ challengeOpen: false, challengeResult: "idle" }),
+
+  // Shared by the Space key (desktop) and the Interact button (mobile) so
+  // both input paths have identical gating (exists + not locked).
+  tryOpenNearbyMission: () => {
+    const id = get().nearbyMissionId;
+    if (!id) return;
+    if (!MISSIONS.some((m) => m.id === id)) return;
+    if (get().statusOf(id) === "locked") return;
+    get().setActiveMission(id);
+  },
 
   answerChallenge: (selectedIndex: number) => {
     const id = get().activeMissionId;

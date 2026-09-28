@@ -20,7 +20,6 @@ export default function Scene() {
 
   const completedMissions = useGameStore((s) => s.completedMissions);
   const setNearbyMission = useGameStore((s) => s.setNearbyMission);
-  const setActiveMission = useGameStore((s) => s.setActiveMission);
   const nearbyMissionId = useGameStore((s) => s.nearbyMissionId);
   const dialogOpen = useGameStore((s) => s.dialogOpen);
   const challengeOpen = useGameStore((s) => s.challengeOpen);
@@ -31,16 +30,9 @@ export default function Scene() {
     controlsEnabled.current = !(dialogOpen || challengeOpen);
   }, [dialogOpen, challengeOpen]);
 
-  // Space opens the dialog when nearby + no dialog active
-  const onSpace = () => {
-    const nearby = useGameStore.getState().nearbyMissionId;
-    if (!nearby) return;
-    const m = MISSIONS.find((x) => x.id === nearby);
-    if (!m) return;
-    const status = useGameStore.getState().statusOf(nearby);
-    if (status === "locked") return; // can't open locked
-    setActiveMission(nearby);
-  };
+  // Space opens the dialog when nearby + no dialog active — same logic the
+  // mobile Interact button uses (store action keeps the two in sync).
+  const onSpace = () => useGameStore.getState().tryOpenNearbyMission();
 
   useSpaceHandler(onSpace, !dialogOpen && !challengeOpen);
 
